@@ -1,0 +1,19 @@
+<project name="Alfredo">
+
+    <bannerLeft>
+        <name>&nbsp;</name>
+    </bannerLeft>
+
+    <skin>
+        <groupId>org.apache.maven.skins</groupId>
+        <artifactId>maven-stylus-skin</artifactId>
+        <version>1.1</version>
+    </skin>
+
+    <body>
+        <links>
+            <item name="Cloudera" href="http://www.cloudera.com/"/>
+        </links>
+    </body>
+
+</project>

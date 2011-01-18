@@ -1,0 +1,127 @@
+/**
+ * Licensed to Cloudera, Inc. under one
+ * or more contributor license agreements. See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership. Cloudera, Inc. licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License. You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.cloudera.alfredo.server;
+
+import com.cloudera.alfredo.client.AuthenticationException;
+import com.cloudera.alfredo.client.PseudoAuthenticator;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Properties;
+
+/**
+ * The <code>PseudoAuthenticationHandler</code> provides a pseudo authentication mechanism that accepts
+ * the user name specified as a query string parameter.
+ * <p/>
+ * This mimics the model of Hadoop Simple authentication which trust the 'user.name' property provided in
+ * the configuration object.
+ * <p/>
+ * This handler can be configured to support anonymous users.
+ * <p/>
+ * The supported configuration property is:
+ * <ul>
+ *   <li>annonymous.allowed: <code>true|false</code>, default value is <code>false</code></li>
+ * </ul>
+ */
+public class PseudoAuthenticationHandler implements AuthenticationHandler {
+
+    /**
+     * Constant that identifies the authentication mechanism.
+     */
+    public static final String TYPE = "simple";
+
+    /**
+     * Constant for the configuration property that indicates if annonymous users are allowed.
+     */
+    public static final String ANNONYMOUS_ALLOWED = "annonymous.allowed";
+
+    private boolean acceptAnnonymous;
+
+    /**
+     * Initializes the authentication handler instance.
+     * <p/>
+     * This method is invoked by the {@link AuthenticationFilter#init} method.
+     *
+     * @param config configuration properties to initialize the handler.
+     *
+     * @throws ServletException thrown if the handler could not be initialized.
+     */
+    @Override
+    public void init(Properties config) throws ServletException {
+        acceptAnnonymous = Boolean.parseBoolean(config.getProperty(ANNONYMOUS_ALLOWED, "false"));
+    }
+
+    /**
+     * Returns if the handler is configured to support annonymous users.
+     *
+     * @return if the handler is configured to support annonymous users.
+     */
+    protected boolean getAcceptAnnonymous() {
+        return acceptAnnonymous;
+    }
+
+    /**
+     * Releases any resources initialized by the authentication handler.
+     * <p/>
+     * This implementation does a NOP.
+     */
+    @Override
+    public void destroy() {
+    }
+
+    /**
+     * Authenticates an HTTP client request.
+     * <p/>
+     * It extract the {@link PseudoAuthenticator#USER_NAME} parameter from the query string and creates
+     * and {@link AuthenticationToken} with it.
+     * <p/>
+     * If the HTTP client request does not contain the {@link PseudoAuthenticator#USER_NAME} parameter and
+     * the handler is configured to allow anonymous users it returns the {@link AuthenticationToken#ANNONYMOUS}
+     * token.
+     * <p/>
+     * If the HTTP client request does not contain the {@link PseudoAuthenticator#USER_NAME} parameter and
+     * the handler is configured to disallow anonymous users it thows an {@link AuthenticationException}.
+     *
+     * @param request the HTTP client request.
+     * @param response the HTTP client response.
+     * @return an authentication token if the HTTP client request is accepted and credentials are valid.
+     * @throws IOException thrown if an IO error occurred.
+     * @throws AuthenticationException thrown if HTTP client request was not accepted as an authentication request.
+     */
+    @Override
+    public AuthenticationToken authenticate(HttpServletRequest request, HttpServletResponse response)
+            throws IOException, AuthenticationException {
+        AuthenticationToken token;
+        String userName = request.getParameter(PseudoAuthenticator.USER_NAME);
+        if (userName == null) {
+            if (getAcceptAnnonymous()) {
+                token = AuthenticationToken.ANNONYMOUS;
+            }
+            else {
+                throw new AuthenticationException("Annonymous requests are disallowed");
+            }
+        }
+        else {
+            token = new AuthenticationToken(userName, userName, TYPE);
+        }
+        return token;
+    }
+    
+}
