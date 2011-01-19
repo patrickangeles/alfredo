@@ -1,0 +1,57 @@
+~~ Licensed to Cloudera, Inc. under one
+~~ or more contributor license agreements. See the NOTICE file
+~~ distributed with this work for additional information
+~~ regarding copyright ownership. Cloudera, Inc. licenses this file
+~~ to you under the Apache License, Version 2.0 (the
+~~ "License"); you may not use this file except in compliance
+~~ with the License. You may obtain a copy of the License at
+~~
+~~ http://www.apache.org/licenses/LICENSE-2.0
+~~
+~~ Unless required by applicable law or agreed to in writing, software
+~~ distributed under the License is distributed on an "AS IS" BASIS,
+~~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+~~ See the License for the specific language governing permissions and
+~~ limitations under the License.
+
+  ---
+  Alfredo, Java HTTP SPNEGO - Building It
+  ---
+  Alejandro Abdelnur
+  ---
+  January 2011
+
+Alfredo, Java HTTP SPNEGO - Building It
+
+  \[ {{{index.html}Go Back}} \]
+
+* Requirements
+
+    * Java 6+
+
+    * Maven 3+
+
+* Source location
+
+    * GitHub URL: {{https://github.com/cloudera/alfredo}}
+  
+    * Git URL: <<<git://github.com/cloudera/alfredo.git>>>
+
+* Building and testing
+
+    Use Maven goals: clean, test, compile, package, site, install
+
+* Testing Configuration
+
+    The following <<<-D>>> options can be used with Maven to change test configuration options:
+
+    * <<<alfredo.test.kerberos.realm>>>: default value <<LOCALHOST>>
+
+    * <<<alfredo.test.kerberos.client.principal>>>: default value <<client@LOCALHOST>>
+
+    * <<<alfredo.test.kerberos.server.principal>>>: default value <<HTTP/localhost@LOCALHOST>>
+
+    * <<<alfredo.test.kerberos.keytab.file>>>: default value <<${HOME}/${USER}.keytab>>
+
+  \[ {{{index.html}Go Back}} \]
+

@@ -15,13 +15,15 @@
 ~~ limitations under the License.
 
   ---
-  Alfredo, Java HTTP SPNEGO - Configuration
+  Alfredo, Java HTTP SPNEGO - Server Side Configuration
   ---
   Alejandro Abdelnur
   ---
-  17 January 2011
+  January 2011
 
-Alfredo, Java HTTP SPNEGO - Configuration
+Alfredo, Java HTTP SPNEGO - Server Side Configuration
+
+  \[ {{{index.html}Go Back}} \]
 
 * Server Side Configuration Setup
 
@@ -146,3 +148,5 @@ Alfredo, Java HTTP SPNEGO - Configuration
     ...
 </web-app>
 +---+
+
+  \[ {{{index.html}Go Back}} \]
