@@ -27,14 +27,12 @@ Alfredo, Java HTTP SPNEGO - Examples
 
 * Accessing a Alfredo protected URL Using a browser
 
-  <<IMPORTANT:>> The browser must support HTTP Kerberos SPNEGO. For example, Firefox and Internet Explorer.
+  <<IMPORTANT:>> The browser must support HTTP Kerberos SPNEGO. For example, Firefox or Internet Explorer.
 
-  Configure the browser to allow
-
-  For Firefox access the low level configuration page by entering <<<about:config>>> as URL. Then go to the
+  For Firefox access the low level configuration page by loading the <<<about:config>>> page. Then go to the
   <<<network.negotiate-auth.trusted-uris>>> preference and add the hostname or the domain of the web server that
-  is HTTP Kerberos SPNEGO protected.
-
+  is HTTP Kerberos SPNEGO protected (if using multiple domains and hostname use comma to separate them).
+  
 * Accessing a Alfredo protected URL Using <<<curl>>>
 
   <<IMPORTANT:>> The <<<curl>>> version must support GSS, run <<<curl -V>>>.
