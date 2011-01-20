@@ -33,6 +33,10 @@ Alfredo, Java HTTP SPNEGO
 
   Alfredo is distributed under {{{http://www.apache.org/licenses/}Apache License 2.0}}.
 
+* Source Repository
+
+  {{http://github.com/cloudera/alfredo}}
+
 * How Does Alfredo Works?
 
   Alfredo forces authentication on protected resources, once authentiation has been established it
