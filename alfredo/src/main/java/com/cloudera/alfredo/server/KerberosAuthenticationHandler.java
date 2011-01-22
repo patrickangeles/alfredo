@@ -110,12 +110,12 @@ public class KerberosAuthenticationHandler implements AuthenticationHandler {
     /**
      * Constant for the configuration property that indicates the kerberos principal.
      */
-    public static final String PRINCIPAL = "kerberos.principal";
+    public static final String PRINCIPAL = TYPE + ".principal";
 
     /**
      * Constant for the configuration property that indicates the keytab file path.
      */
-    public static final String KEYTAB = "kerberos.keytab";
+    public static final String KEYTAB = TYPE + ".keytab";
 
     private String principal;
     private String keytab;

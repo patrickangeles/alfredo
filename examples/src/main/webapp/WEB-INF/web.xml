@@ -47,15 +47,15 @@
         <filter-name>annonymousFilter</filter-name>
         <filter-class>com.cloudera.alfredo.server.AuthenticationFilter</filter-class>
         <init-param>
-            <param-name>authentication.type</param-name>
+            <param-name>type</param-name>
             <param-value>simple</param-value>
         </init-param>
         <init-param>
-            <param-name>annonymous.allowed</param-name>
+            <param-name>simple.annonymous.allowed</param-name>
             <param-value>true</param-value>
         </init-param>
         <init-param>
-            <param-name>auth.token.validity</param-name>
+            <param-name>token.validity</param-name>
             <param-value>30</param-value>
         </init-param>
     </filter>
@@ -64,15 +64,15 @@
         <filter-name>simpleFilter</filter-name>
         <filter-class>com.cloudera.alfredo.server.AuthenticationFilter</filter-class>
         <init-param>
-            <param-name>authentication.type</param-name>
+            <param-name>type</param-name>
             <param-value>simple</param-value>
         </init-param>
         <init-param>
-            <param-name>annonymous.allowed</param-name>
+            <param-name>simple.annonymous.allowed</param-name>
             <param-value>false</param-value>
         </init-param>
         <init-param>
-            <param-name>auth.token.validity</param-name>
+            <param-name>token.validity</param-name>
             <param-value>30</param-value>
         </init-param>
     </filter>
@@ -81,7 +81,7 @@
         <filter-name>kerberosFilter</filter-name>
         <filter-class>com.cloudera.alfredo.server.AuthenticationFilter</filter-class>
         <init-param>
-            <param-name>authentication.type</param-name>
+            <param-name>type</param-name>
             <param-value>kerberos</param-value>
         </init-param>
         <init-param>
@@ -93,7 +93,7 @@
             <param-value>/tmp/alfredo.keytab</param-value>
         </init-param>
         <init-param>
-            <param-name>auth.token.validity</param-name>
+            <param-name>token.validity</param-name>
             <param-value>30</param-value>
         </init-param>
     </filter>

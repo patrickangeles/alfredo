@@ -50,7 +50,7 @@ public class PseudoAuthenticationHandler implements AuthenticationHandler {
     /**
      * Constant for the configuration property that indicates if annonymous users are allowed.
      */
-    public static final String ANNONYMOUS_ALLOWED = "annonymous.allowed";
+    public static final String ANNONYMOUS_ALLOWED = TYPE + ".annonymous.allowed";
 
     private boolean acceptAnnonymous;
 

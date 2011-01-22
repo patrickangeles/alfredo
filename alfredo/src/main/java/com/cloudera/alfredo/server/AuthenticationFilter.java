@@ -83,7 +83,7 @@ public class AuthenticationFilter implements Filter {
     /**
      * Constant for the property that specifies the authentication handler to use.
      */
-    public static final String AUTH_TYPE = "authentication.type";
+    public static final String AUTH_TYPE = "type";
 
     /**
      * Constant for the property that specifies the secret to use for signing the HTTP Cookies.
@@ -93,7 +93,7 @@ public class AuthenticationFilter implements Filter {
     /**
      * Constant for the configuration property that indicates the validity of the generated token.
      */
-    public static final String AUTH_TOKEN_VALIDITY = "auth.token.validity";
+    public static final String AUTH_TOKEN_VALIDITY = "token.validity";
 
     private Signer signer;
     private AuthenticationHandler authHandler;
