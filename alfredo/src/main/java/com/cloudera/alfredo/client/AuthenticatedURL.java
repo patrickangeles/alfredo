@@ -85,6 +85,15 @@ public class AuthenticatedURL {
         }
 
         /**
+         * Creates a token using an existing string representation of the token.
+         *
+         * @param tokenStr string representation of the tokenStr.
+         */
+        public Token(String tokenStr) {
+            set(tokenStr);
+        }
+
+        /**
          * Returns if a token from the server has been set.
          *
          * @return if a token from the server has been set.

@@ -1,0 +1,8 @@
+-- Alfredo 0.1.1 release
+
+- Add AuthenticatedURL.Token constructor that takes a string representation of a token
+- Improved documentation
+
+-- Alfredo 0.1.0 release
+
+- First release

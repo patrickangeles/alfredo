@@ -31,6 +31,14 @@ import java.util.Map;
  */
 public class TestAuthenticatedURL extends TestCase {
 
+    public void testToken() throws Exception {
+        AuthenticatedURL.Token token = new AuthenticatedURL.Token();
+        assertFalse(token.isSet());
+        token = new AuthenticatedURL.Token("foo");
+        assertTrue(token.isSet());
+        assertEquals("foo", token.toString());
+    }
+
     public void testInjectToken() throws Exception {
         HttpURLConnection conn = Mockito.mock(HttpURLConnection.class);
         AuthenticatedURL.Token token = new AuthenticatedURL.Token();
