@@ -119,6 +119,7 @@ public class KerberosAuthenticationHandler implements AuthenticationHandler {
 
     private String principal;
     private String keytab;
+    private GSSManager gssManager;
     private LoginContext loginContext;
 
     /**
@@ -156,6 +157,19 @@ public class KerberosAuthenticationHandler implements AuthenticationHandler {
             loginContext = new LoginContext("", subject, null, kerberosConfiguration);
             loginContext.login();
 
+            Subject serverSubject = loginContext.getSubject();
+            try {
+                gssManager = Subject.doAs(serverSubject, new PrivilegedExceptionAction<GSSManager>() {
+
+                    @Override
+                    public GSSManager run() throws Exception {
+                        return GSSManager.getInstance();
+                    }
+                });
+            }
+            catch (PrivilegedActionException ex) {
+                throw ex.getException();
+            }
             LOG.info("Initialized, principal [{}] from keytab [{}]", principal, keytab);
         }
         catch (Exception ex) {
@@ -240,7 +254,7 @@ public class KerberosAuthenticationHandler implements AuthenticationHandler {
                         AuthenticationToken token = null;
                         GSSContext gssContext = null;
                         try {
-                            gssContext = GSSManager.getInstance().createContext((GSSCredential) null);
+                            gssContext = gssManager.createContext((GSSCredential) null);
                             byte[] serverToken = gssContext.acceptSecContext(clientToken, 0, clientToken.length);
                             if (serverToken != null && serverToken.length > 0) {
                                 String authenticate = base64.encodeToString(serverToken);
