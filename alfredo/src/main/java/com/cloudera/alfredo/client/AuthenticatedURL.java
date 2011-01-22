@@ -90,6 +90,9 @@ public class AuthenticatedURL {
          * @param tokenStr string representation of the tokenStr.
          */
         public Token(String tokenStr) {
+            if (tokenStr == null) {
+                throw new IllegalArgumentException("tokenStr cannot be null");
+            }
             set(tokenStr);
         }
 
@@ -121,6 +124,31 @@ public class AuthenticatedURL {
             return token;
         }
 
+        /**
+         * Return the hashcode for the token.
+         *
+         * @return the hashcode for the token.
+         */
+        @Override
+        public int hashCode() {
+            return (token != null) ? token.hashCode() : 0;
+        }
+
+        /**
+         * Return if two token instances are equal.
+         *
+         * @param o the other token instance.
+         * @return if this instance and the other instance are equal.
+         */
+        @Override
+        public boolean equals(Object o) {
+            boolean eq = false;
+            if (o instanceof Token) {
+                Token other = (Token) o;
+                eq = (token == null && other.token == null) || (token != null && this.token.equals(other.token));
+            }
+            return eq;
+        }
     }
 
     private static Class<? extends Authenticator> DEFAULT_AUTHENTICATOR = KerberosAuthenticator.class;

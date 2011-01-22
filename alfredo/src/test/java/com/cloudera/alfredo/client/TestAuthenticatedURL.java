@@ -37,6 +37,36 @@ public class TestAuthenticatedURL extends TestCase {
         token = new AuthenticatedURL.Token("foo");
         assertTrue(token.isSet());
         assertEquals("foo", token.toString());
+
+        AuthenticatedURL.Token token1 = new AuthenticatedURL.Token();
+        AuthenticatedURL.Token token2 = new AuthenticatedURL.Token();
+        assertEquals(token1.hashCode(), token2.hashCode());
+        assertTrue(token1.equals(token2));
+
+        token1 = new AuthenticatedURL.Token();
+        token2 = new AuthenticatedURL.Token("foo");
+        assertNotSame(token1.hashCode(), token2.hashCode());
+        assertFalse(token1.equals(token2));
+
+        token1 = new AuthenticatedURL.Token("foo");
+        token2 = new AuthenticatedURL.Token();
+        assertNotSame(token1.hashCode(), token2.hashCode());
+        assertFalse(token1.equals(token2));
+
+        token1 = new AuthenticatedURL.Token("foo");
+        token2 = new AuthenticatedURL.Token("foo");
+        assertEquals(token1.hashCode(), token2.hashCode());
+        assertTrue(token1.equals(token2));
+
+        token1 = new AuthenticatedURL.Token("bar");
+        token2 = new AuthenticatedURL.Token("foo");
+        assertNotSame(token1.hashCode(), token2.hashCode());
+        assertFalse(token1.equals(token2));
+
+        token1 = new AuthenticatedURL.Token("foo");
+        token2 = new AuthenticatedURL.Token("bar");
+        assertNotSame(token1.hashCode(), token2.hashCode());
+        assertFalse(token1.equals(token2));
     }
 
     public void testInjectToken() throws Exception {
