@@ -1,0 +1,220 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Alfredo - Alfredo, Java HTTP SPNEGO 0.1.0</title>
+    <style type="text/css" media="all">
+      @import url("./css/maven-base.css");
+      @import url("./css/maven-theme.css");
+      @import url("./css/site.css");
+    </style>
+    <link rel="stylesheet" href="./css/print.css" type="text/css" media="print" />
+          <meta name="author" content="Alejandro Abdelnur" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+      </head>
+  <body class="composite">
+    <div id="banner">
+                    <span id="bannerLeft">
+    
+             
+    
+            </span>
+                    <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+          
+  
+
+  
+    
+            
+  
+    
+            <div class="xleft">
+        Last Published: 2011-01-23
+                      </div>
+            <div class="xright">            <a href="../index.html">OTHER RELEASES</a>
+            |
+                <a href="http://www.cloudera.com/" class="externalLink">Cloudera</a>
+            
+  
+
+  
+    
+            
+  
+    
+             Version: 0.1.0
+      </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+           
+  
+
+  
+    
+            
+  
+    
+                                                <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+            <img alt="Built by Maven" src="./images/logos/maven-feather.png"></img>
+          </a>
+                       
+  
+
+  
+    
+            
+  
+    
+        </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        <div class="section"><h2>Alfredo, Java HTTP SPNEGO 0.1.0</h2>
+<p>Alfredo is a Java library consisting of a client and a server components to enable Kerberos SPNEGO authentication for HTTP.</p>
+<p>Alfredo also supports additional authentication mechanisms on the client and the server side via 2 simple interfaces.</p>
+<div class="section"><h3>License</h3>
+<p>Alfredo is distributed under <a class="externalLink" href="http://www.apache.org/licenses/">Apache License 2.0</a>.</p>
+</div>
+<div class="section"><h3>How Does Alfredo Works?</h3>
+<p>Alfredo forces authentication on protected resources, once authentiation has been established it sets a signed HTTP Cookie that contains an authentication token with the user name, user principal, authentication type and expiration time.</p>
+<p>Subsequent HTTP client requests presenting the signed HTTP Cookie have access to the protected resources until the authentication token expires.</p>
+</div>
+<div class="section"><h3>User Documentation</h3>
+<ul><li><a href="Configuration.html">Configuration</a></li>
+<li><a href="apidocs/index.html">JavaDocs</a></li>
+<li><a href="dependencies.html">Dependencies</a></li>
+</ul>
+</div>
+<div class="section"><h3>Accessing a Alfredo protected URL Using <tt>curl</tt></h3>
+<p><b>IMPORTANT:</b> The <tt>curl</tt> version must support GSS, run <tt>curl -V</tt>.</p>
+<div class="source"><pre>$ curl -V
+curl 7.19.7 (universal-apple-darwin10.0) libcurl/7.19.7 OpenSSL/0.9.8l zlib/1.2.3
+Protocols: tftp ftp telnet dict ldap http file https ftps
+Features: GSS-Negotiate IPv6 Largefile NTLM SSL libz</pre>
+</div>
+<p>Login to the KDC using <b>kinit</b> and then use <tt>curl</tt> to fetch protected URL:</p>
+<div class="source"><pre>$ kinit
+Please enter the password for tucu@LOCALHOST:
+$ curl --negotiate -u foo -b ~/cookiejar.txt -c ~/cookiejar.txt http://localhost:8080/alfredo-examples/kerberos/who
+Enter host password for user 'tucu':
+
+Hello Alfredo!</pre>
+</div>
+<ul><li>The <tt>--negotiate</tt> option enables SPNEGO in <tt>curl</tt>.</li>
+<li>The <tt>-u foo</tt> option is required but the user ignored (the principal that has been kinit-ed is used).</li>
+<li>The <tt>-b</tt> and <tt>-c</tt> are use to store and send HTTP Cookies.</li>
+</ul>
+</div>
+<div class="section"><h3>Using the Java Client</h3>
+<p>Use the <tt>AuthenticatedURL</tt> class to obtain an authenticated HTTP connection:</p>
+<div class="source"><pre>...
+URL url = new URL(&quot;http://localhost:8080/alfredo/kerberos/who&quot;);
+AuthenticatedURL.Token token = new AuthenticatedURL.Token();
+...
+HttpURLConnection conn = new AuthenticatedURL(url, token).openConnection();
+...
+conn = new AuthenticatedURL(url, token).openConnection();
+...</pre>
+</div>
+</div>
+<div class="section"><h3>Building and Running the Examples</h3>
+<p>Download Alfredo's source code, the examples are in a Maven project in the <tt>examples</tt> directory.</p>
+<p><b>Server Example</b>:</p>
+<p>Edit the <tt>examples/src/main/webapp/WEB-INF/web.xml</tt> and set the right configuration init parameters for the <tt>AuthenticationFilter</tt> definition configured for Kerberos (the right Kerberos principal and keytab file must be specified). Refer to the <a href="Configuration.html">Configuration document</a> for details.</p>
+<p>Create the web application WAR file by running the <tt>mvn package</tt> command.</p>
+<p>Deploy the WAR file in a servlet container. For example, if using Tomcat, copy the WAR file to Tomcat's <tt>webapps/</tt> directory.</p>
+<p>Start the servlet container.</p>
+<p><b>Accessing the server using</b> <tt>curl</tt>:</p>
+<p>Try accessing protected resources using <tt>curl</tt>. The protected resources are:</p>
+<div class="source"><pre>$ kinit
+Please enter the password for tucu@LOCALHOST:
+
+$ curl http://localhost:8080/alfredo-examples/annonymous/who
+
+$ curl http://localhost:8080/alfredo-examples/simple/who?user.name=foo
+
+$ curl --negotiate -u foo -b ~/cookiejar.txt -c ~/cookiejar.txt http://localhost:8080/alfredo-examples/kerberos/who</pre>
+</div>
+<p><b>Accessing the server using the Java client example</b>:</p>
+<div class="source"><pre>$ kinit
+Please enter the password for tucu@LOCALHOST:
+
+$ cd examples
+
+$ mvn exec:java -Durl=http://localhost:8080/alfredo-examples/kerberos/who
+
+....
+
+Token value: &quot;u=tucu,p=tucu@LOCALHOST,t=kerberos,e=1295305313146,s=sVZ1mpSnC5TKhZQE3QLN5p2DWBo=&quot;
+Status code: 200 OK
+
+You are: user[tucu] principal[tucu@LOCALHOST]
+
+....
+</pre>
+</div>
+</div>
+<div class="section"><h3>Developer Documentation, Building Alfredo</h3>
+<p><b>Requirements:</b></p>
+<ul><li>Java 6+</li>
+<li>Maven 3+</li>
+</ul>
+<p><b>Source location:</b></p>
+<ul><li>GitHub URL: <a class="externalLink" href="https://github.com/cloudera/alfredo">https://github.com/cloudera/alfredo</a></li>
+<li>Git URL: <tt>git://github.com/cloudera/alfredo.git</tt></li>
+</ul>
+<p><b>Building and testing:</b></p>
+<p>Use Maven goals: clean, test, compile, package, site, install</p>
+<p><b>Testing Configuration:</b></p>
+<p>The following <tt>-D</tt> options can be used with Maven to change test configuration options:</p>
+<ul><li><tt>alfredo.test.kerberos.realm</tt>: default value <b>LOCALHOST</b></li>
+<li><tt>alfredo.test.kerberos.client.principal</tt>: default value <b>client@LOCALHOST</b></li>
+<li><tt>alfredo.test.kerberos.server.principal</tt>: default value <b>HTTP/localhost@LOCALHOST</b></li>
+<li><tt>alfredo.test.kerberos.keytab.file</tt>: default value <b>$<a name="HOME">HOME</a>/$<a name="USER">USER</a>.keytab</b></li>
+</ul>
+</div>
+</div>
+
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">&#169;  
+          2011
+    
+          Cloudera Inc.
+          
+  
+
+  
+    
+            
+  
+    
+   - <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a></div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>
