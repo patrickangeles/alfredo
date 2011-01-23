@@ -1,5 +1,6 @@
 -- Alfredo 0.1.1 release
 
+- Add version number var to doc pages
 - Reorganizing docs layout for multiple releases
 - Normalizing configuration property names
 - Add equals/hashcode methods to AuthenticatedURL.Token

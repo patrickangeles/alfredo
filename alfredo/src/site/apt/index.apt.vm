@@ -15,13 +15,13 @@
 ~~ limitations under the License.
 
   ---
-  Alfredo, Java HTTP SPNEGO
+  Alfredo, Java HTTP SPNEGO ${project.version}
   ---
   Alejandro Abdelnur
   ---
-  January 2011
+  ${maven.build.timestamp}
 
-Alfredo, Java HTTP SPNEGO
+Alfredo, Java HTTP SPNEGO ${project.version}
 
    Alfredo is a Java library consisting of a client and a server components to enable Kerberos SPNEGO
    authentication for HTTP.

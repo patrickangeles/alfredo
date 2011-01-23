@@ -15,13 +15,13 @@
 ~~ limitations under the License.
 
   ---
-  Alfredo, Java HTTP SPNEGO - Server Side Configuration
+  Alfredo, Java HTTP SPNEGO ${project.version} - Server Side Configuration
   ---
   Alejandro Abdelnur
   ---
-  January 2011
+  ${maven.build.timestamp}
 
-Alfredo, Java HTTP SPNEGO - Server Side Configuration
+Alfredo, Java HTTP SPNEGO ${project.version} - Server Side Configuration
 
   \[ {{{index.html}Go Back}} \]
 

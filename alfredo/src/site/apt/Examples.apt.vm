@@ -15,13 +15,13 @@
 ~~ limitations under the License.
 
   ---
-  Alfredo, Java HTTP SPNEGO - Examples
+  Alfredo, Java HTTP SPNEGO ${project.version} - Examples
   ---
   Alejandro Abdelnur
   ---
-  January 2011
+  ${maven.build.timestamp}
 
-Alfredo, Java HTTP SPNEGO - Examples
+Alfredo, Java HTTP SPNEGO ${project.version} - Examples
 
   \[ {{{index.html}Go Back}} \]
 

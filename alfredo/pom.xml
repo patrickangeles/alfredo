@@ -43,6 +43,10 @@
         <url>http://www.cloudera.com</url>
     </organization>
 
+    <properties>
+        <maven.build.timestamp.format>yyyyMMdd</maven.build.timestamp.format>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
