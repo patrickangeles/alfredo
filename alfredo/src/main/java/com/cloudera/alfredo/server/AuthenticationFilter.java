@@ -57,12 +57,12 @@ import java.util.Random;
  * <ul>
  *   <li>config.prefix: indicates the prefix to be used by all other configuration properties, the default value
  *   is no prefix. See below for details on how/why this prefix is used.</li>
- *   <li>#PREFIX#.authentication.type: simple|kerberos|#CLASS#, 'simple' is short for the
+ *   <li>[#PREFIX#.]type: simple|kerberos|#CLASS#, 'simple' is short for the
  *   {@link PseudoAuthenticationHandler}, 'kerberos' is short for {@link KerberosAuthenticationHandler}, otherwise
  *   the full class name of the {@link AuthenticationHandler} must be specified.</li>
- *   <li>#PREFIX#.signature.secret: the secret used to sign the HTTP Cookie value, the default value is a random
+ *   <li>[#PREFIX#.]signature.secret: the secret used to sign the HTTP Cookie value, the default value is a random
  *   value (unless multiple webapp instances need to share the secret the random value is adequate.</li>
- *   <li>auth.token.validity: validity -in seconds- of the generated token is valid before a
+ *   <li>[#PREFIX#.]token.validity: validity -in seconds- of the generated token is valid before a
  *       new authentication is triggered, default value is <code>3600</code> seconds</li>
  * </ul>
  * <p/>

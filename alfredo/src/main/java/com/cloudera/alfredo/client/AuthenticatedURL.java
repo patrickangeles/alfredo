@@ -41,7 +41,7 @@ import java.util.Map;
  * <p/>
  * The usage pattern of the <code>AuthenticatedURL</code> is:
  * <p/>
- * <verbatim>
+ * <pre>
  *
  * // establishing an initial connection
  *
@@ -60,7 +60,7 @@ import java.util.Map;
  * // use the 'conn' instance
  * ....
  *
- * </verbatim>
+ * </pre>
  */
 public class AuthenticatedURL {
 

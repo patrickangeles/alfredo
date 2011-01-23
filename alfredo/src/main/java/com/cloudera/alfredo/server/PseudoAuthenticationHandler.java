@@ -37,7 +37,7 @@ import java.util.Properties;
  * <p/>
  * The supported configuration property is:
  * <ul>
- *   <li>annonymous.allowed: <code>true|false</code>, default value is <code>false</code></li>
+ *   <li>simple.annonymous.allowed: <code>true|false</code>, default value is <code>false</code></li>
  * </ul>
  */
 public class PseudoAuthenticationHandler implements AuthenticationHandler {
