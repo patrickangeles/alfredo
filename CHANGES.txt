@@ -1,5 +1,6 @@
 -- Alfredo 0.1.1 release
 
+- Reorganizing docs layout for multiple releases
 - Normalizing configuration property names
 - Add equals/hashcode methods to AuthenticatedURL.Token
 - GSSManager instance is obtained at init time instead on every authentication request

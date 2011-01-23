@@ -1,0 +1,29 @@
+<assembly>
+    <id>docs</id>
+    <formats>
+        <format>dir</format>
+    </formats>
+    <includeBaseDirectory>false</includeBaseDirectory>
+    <fileSets>
+        <fileSet>
+            <directory>${basedir}/target/site</directory>
+            <outputDirectory>docs/${project.version}</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>${basedir}/target/site</directory>
+            <outputDirectory>docs/latest</outputDirectory>
+        </fileSet>
+    </fileSets>
+    <files>
+        <file>
+            <source>${basedir}/src/site/root.html</source>
+            <outputDirectory>/</outputDirectory>
+            <destName>index.html</destName>
+        </file>
+        <file>
+            <source>${basedir}/src/site/docs.html</source>
+            <outputDirectory>docs/</outputDirectory>
+            <destName>index.html</destName>
+        </file>
+    </files>
+</assembly>

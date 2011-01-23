@@ -1,5 +1,7 @@
 <project name="Alfredo">
 
+    <version position="right"/>
+
     <bannerLeft>
         <name>&nbsp;</name>
     </bannerLeft>
@@ -12,6 +14,7 @@
 
     <body>
         <links>
+            <item name="OTHER RELEASES" href="../index.html"/>
             <item name="Cloudera" href="http://www.cloudera.com/"/>
         </links>
     </body>
