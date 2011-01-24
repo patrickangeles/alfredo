@@ -53,5 +53,177 @@ Alfredo, Java HTTP SPNEGO ${project.version} - Building It
 
     * <<<alfredo.test.kerberos.keytab.file>>>: default value <<${HOME}/${USER}.keytab>>
 
+* Doing a Release
+
+** Update the Version, Tag the Repository, Deploy the POM/JARs to the Maven Repository
+
+    Use the <<<mvn release:prepare>>> and <<<mvn release:perform>>> commands.
+
+    The following instructions will:
+
+    * Update the versions in POMs to the release version
+    * Tag the commit with the release version
+    * Update the versions in the POMs to the next development version
+    * Deploy the POM/JARs to the Maven Repository
+
+    For the tag name use exactly the release number (i.e. <<<0.1.2>>>).
+
+    <<IMPORTANT:>> Write permission to the GitHub repository and to the CDH release Maven repository are required.
+
+    <<Example:>>
+
++---+
+$ mvn release:prepare
+
+...
+[INFO] Checking dependencies and plugins for snapshots ...
+What is the release version for "Alfredo, Java HTTP SPNEGO Main"? (com.cloudera.alfredo:alfredo-main) 0.1.2: :
+What is the release version for "Alfredo, Java HTTP SPNEGO"? (com.cloudera.alfredo:alfredo) 0.1.2: :
+What is the release version for "Alfredo, Java HTTP SPNEGO Examples"? (com.cloudera.alfredo:alfredo-examples) 0.1.2: :
+What is SCM release tag or label for "Alfredo, Java HTTP SPNEGO Main"? (com.cloudera.alfredo:alfredo-main) alfredo-main-0.1.2: : 0.1.2
+What is the new development version for "Alfredo, Java HTTP SPNEGO Main"? (com.cloudera.alfredo:alfredo-main) 0.1.3-SNAPSHOT: :
+What is the new development version for "Alfredo, Java HTTP SPNEGO"? (com.cloudera.alfredo:alfredo) 0.1.3-SNAPSHOT: :
+What is the new development version for "Alfredo, Java HTTP SPNEGO Examples"? (com.cloudera.alfredo:alfredo-examples) 0.1.3-SNAPSHOT: :
+[INFO] Transforming 'Alfredo, Java HTTP SPNEGO Main'...
+...
+[INFO] Release preparation complete.
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary:
+[INFO]
+[INFO] Alfredo, Java HTTP SPNEGO Main .................... SUCCESS [35.426s]
+[INFO] Alfredo, Java HTTP SPNEGO ......................... SUCCESS [0.025s]
+[INFO] Alfredo, Java HTTP SPNEGO Examples ................ SUCCESS [0.016s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+
+
+$ mvn release:perform
+
+...
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Alfredo, Java HTTP SPNEGO Main 0.1.3-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO]
+[INFO] --- maven-release-plugin:2.0:perform (default-cli) @ alfredo-main ---
+[INFO] Checking out the project to perform the release ...
+...
+[INFO] Alfredo, Java HTTP SPNEGO Main .................... SUCCESS [24.711s]
+[INFO] Alfredo, Java HTTP SPNEGO ......................... SUCCESS [0.024s]
+[INFO] Alfredo, Java HTTP SPNEGO Examples ................ SUCCESS [0.015s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 25.735s
+[INFO] Finished at: Mon Jan 24 11:03:07 SGT 2011
+[INFO] Final Memory: 7M/81M
+[INFO] ------------------------------------------------------------------------
+
+$
+
++---+
+
+** Publish the Documentation
+
+   Checkout the release tag and run <<<mvn clean install site>>>.
+
+   <<IMPORTANT:>> The <<<install>>> goal must be used to install the <<<alfredo>>> artifact in the local Maven
+   cache, otherwise the <<<site>>> goal will fail when processing the <<<examples>>>.
+   
+   <<Example:>>
+
++---+
+$ git checkout 0.1.2
+Previous HEAD position was a642b05... [maven-release-plugin] prepare release 0.1.3
+HEAD is now at 94d0f23... [maven-release-plugin] prepare release 0.1.2
+
+$ mvn clean install site
+[INFO] Scanning for projects...
+
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+...
+
+$
++---+
+
+   The generated documentation is available at <<<alfredo/target/alfredo-0.1.2-docs>>>.
+
+   Copy documentation directory to a temporary location.
+
++---+
+$ cp -r alfredo/target/alfredo-0.1.2-docs /tmp/a012docs/
+
+$
++---+
+
+   Checkout the <<<gh-pages>>> branch and clean working directory.
+
++---+
+$ git checkout gh-pages
+Switched to branch 'gh-pages'
+
+$ git clean -d -f
+Removing alfredo/
+Removing examples/
+Removing target/
+
+$
++---+
+
+   Remove <<<docs/latest/>>> directory and commit the removal.
+
++---+
+$ rm -rf docs/latest
+$ git add -u
+$ git commit -m "cleaning latest"
+[gh-pages 5243411] cleaning latest
+ 84 files changed, 0 insertions(+), 12013 deletions(-)
+ delete mode 100644 docs/latest/BuildingIt.html
+ ...
+ delete mode 100644 docs/latest/images/newwindow.png
+ delete mode 100644 docs/latest/index.html
+
+$
++---+
+
+   Copy the new documentation set from the temporary location, add the files to Git and commit them.
+
++---+
+$ cp -r /tmp/a012docs/* .
+
+$ git status
+# On branch gh-pages
+# Your branch is ahead of 'temp/xdocs' by 2 commits.
+#
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#	docs/0.1.2/
+#	docs/latest/
+nothing added to commit but untracked files present (use "git add" to track)
+
+$ git add docs/0.1.2 docs/latest
+
+$ git commit -m "docs 0.1.2"
+[gh-pages 55193ef] docs 0.1.2
+ 170 files changed, 24066 insertions(+), 0 deletions(-)
+ create mode 100644 docs/0.1.2/BuildingIt.html
+ ...
+ create mode 100644 docs/latest/index.html
+
+$
++---+
+
+   Check the documentation locally by, then push the documentation to GitHub.
+
++---+
+$ git push origin gh-pages:gh-pages
+
+$
++---+
+
+   Check the site looks properly: {{{http://cloudera.github.com/alfredo}Alfredo GitHub site}}.
+
   \[ {{{index.html}Go Back}} \]
 

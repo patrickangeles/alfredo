@@ -1,5 +1,6 @@
 -- Alfredo 0.1.2 release
 
+- Setting up to use maven release plugin for releases and documenting release steps
 - Adding CHANGES.txt to release documentation
 - Fixing 'annonymous' typo to 'anonymous', in code and comments
 
