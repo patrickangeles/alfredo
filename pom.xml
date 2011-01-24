@@ -38,7 +38,7 @@
     </organization>
 
     <scm>
-        <connection>scm:git:git://github.com/cloudera/alfredo.git</connection>
+        <connection>scm:git:git@github.com:cloudera/alfredo.git</connection>
         <url>https://github.com/cloudera/alfredo</url>
     </scm>
 
