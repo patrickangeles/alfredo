@@ -48,6 +48,8 @@ Alfredo, Java HTTP SPNEGO ${project.version}
 
 * User Documentation
 
+  * {{{./CHANGES.txt}Changes}}
+
   * {{{Examples.html}Examples}}
 
   * {{{Configuration.html}Server Side Configuration}}

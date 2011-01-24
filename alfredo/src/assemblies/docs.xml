@@ -25,5 +25,13 @@
             <outputDirectory>docs/</outputDirectory>
             <destName>index.html</destName>
         </file>
+        <file>
+            <source>${basedir}/../CHANGES.txt</source>
+            <outputDirectory>docs/${project.version}</outputDirectory>
+        </file>
+        <file>
+            <source>${basedir}/../CHANGES.txt</source>
+            <outputDirectory>docs/latest</outputDirectory>
+        </file>
     </files>
 </assembly>

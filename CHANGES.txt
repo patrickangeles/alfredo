@@ -1,5 +1,6 @@
 -- Alfredo 0.1.2 release
 
+- Adding CHANGES.txt to release documentation
 - Fixing 'annonymous' typo to 'anonymous', in code and comments
 
 -- Alfredo 0.1.1 release
