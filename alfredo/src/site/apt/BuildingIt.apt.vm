@@ -55,6 +55,12 @@ Alfredo, Java HTTP SPNEGO ${project.version} - Building It
 
 * Doing a Release
 
+** Checklist
+
+    * README file must be updated to list the version being released as an available version
+    * Update the <<<alfredo/src/site/docs.html>>> page to include a link to the docs of the version being released
+    * Push the local commits to the GitHub repository
+
 ** Update the Version, Tag the Repository, Deploy the POM/JARs to the Maven Repository
 
     Use the <<<mvn release:prepare>>> and <<<mvn release:perform>>> commands.
@@ -187,7 +193,8 @@ $ git commit -m "cleaning latest"
 $
 +---+
 
-   Copy the new documentation set from the temporary location, add the files to Git and commit them.
+   Copy the new documentation set from the temporary location, add the new documentation files to Git
+   and commit them.
 
 +---+
 $ cp -r /tmp/a012docs/* .
@@ -203,7 +210,7 @@ $ git status
 #	docs/latest/
 nothing added to commit but untracked files present (use "git add" to track)
 
-$ git add docs/0.1.2 docs/latest
+$ git add index.html docs/*
 
 $ git commit -m "docs 0.1.2"
 [gh-pages 55193ef] docs 0.1.2

@@ -26,7 +26,7 @@ Maven information:
 
   Group Id: com.cloudera.alfredo
   Artifact Id: alfredo
-  Available Versions: 0.1.0, 0.1.1
+  Available Versions: 0.1.0, 0.1.1, 0.1.2
   Type: jar
 
   Repository: https://repository.cloudera.com/content/repositories/releases
