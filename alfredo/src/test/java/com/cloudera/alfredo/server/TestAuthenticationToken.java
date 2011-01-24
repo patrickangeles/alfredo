@@ -25,13 +25,13 @@ import junit.framework.TestCase;
  */
 public class TestAuthenticationToken extends TestCase {
 
-    public void testAnnonymous() {
-        assertNotNull(AuthenticationToken.ANNONYMOUS);
-        assertEquals(null, AuthenticationToken.ANNONYMOUS.getUserName());
-        assertEquals(null, AuthenticationToken.ANNONYMOUS.getName());
-        assertEquals(null, AuthenticationToken.ANNONYMOUS.getType());
-        assertEquals(-1, AuthenticationToken.ANNONYMOUS.getExpires());
-        assertFalse(AuthenticationToken.ANNONYMOUS.isExpired());
+    public void testAnonymous() {
+        assertNotNull(AuthenticationToken.ANONYMOUS);
+        assertEquals(null, AuthenticationToken.ANONYMOUS.getUserName());
+        assertEquals(null, AuthenticationToken.ANONYMOUS.getName());
+        assertEquals(null, AuthenticationToken.ANONYMOUS.getType());
+        assertEquals(-1, AuthenticationToken.ANONYMOUS.getExpires());
+        assertFalse(AuthenticationToken.ANONYMOUS.isExpired());
     }
 
     public void testConstructor() throws Exception {

@@ -1,3 +1,7 @@
+-- Alfredo 0.1.2 release
+
+- Fixing 'annonymous' typo to 'anonymous', in code and comments
+
 -- Alfredo 0.1.1 release
 
 - Fixing/Updating javadocs

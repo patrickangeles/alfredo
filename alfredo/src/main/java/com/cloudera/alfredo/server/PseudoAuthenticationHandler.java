@@ -37,7 +37,7 @@ import java.util.Properties;
  * <p/>
  * The supported configuration property is:
  * <ul>
- *   <li>simple.annonymous.allowed: <code>true|false</code>, default value is <code>false</code></li>
+ *   <li>simple.anonymous.allowed: <code>true|false</code>, default value is <code>false</code></li>
  * </ul>
  */
 public class PseudoAuthenticationHandler implements AuthenticationHandler {
@@ -48,11 +48,11 @@ public class PseudoAuthenticationHandler implements AuthenticationHandler {
     public static final String TYPE = "simple";
 
     /**
-     * Constant for the configuration property that indicates if annonymous users are allowed.
+     * Constant for the configuration property that indicates if anonymous users are allowed.
      */
-    public static final String ANNONYMOUS_ALLOWED = TYPE + ".annonymous.allowed";
+    public static final String ANONYMOUS_ALLOWED = TYPE + ".anonymous.allowed";
 
-    private boolean acceptAnnonymous;
+    private boolean acceptAnonymous;
 
     /**
      * Initializes the authentication handler instance.
@@ -65,16 +65,16 @@ public class PseudoAuthenticationHandler implements AuthenticationHandler {
      */
     @Override
     public void init(Properties config) throws ServletException {
-        acceptAnnonymous = Boolean.parseBoolean(config.getProperty(ANNONYMOUS_ALLOWED, "false"));
+        acceptAnonymous = Boolean.parseBoolean(config.getProperty(ANONYMOUS_ALLOWED, "false"));
     }
 
     /**
-     * Returns if the handler is configured to support annonymous users.
+     * Returns if the handler is configured to support anonymous users.
      *
-     * @return if the handler is configured to support annonymous users.
+     * @return if the handler is configured to support anonymous users.
      */
-    protected boolean getAcceptAnnonymous() {
-        return acceptAnnonymous;
+    protected boolean getAcceptAnonymous() {
+        return acceptAnonymous;
     }
 
     /**
@@ -93,7 +93,7 @@ public class PseudoAuthenticationHandler implements AuthenticationHandler {
      * and {@link AuthenticationToken} with it.
      * <p/>
      * If the HTTP client request does not contain the {@link PseudoAuthenticator#USER_NAME} parameter and
-     * the handler is configured to allow anonymous users it returns the {@link AuthenticationToken#ANNONYMOUS}
+     * the handler is configured to allow anonymous users it returns the {@link AuthenticationToken#ANONYMOUS}
      * token.
      * <p/>
      * If the HTTP client request does not contain the {@link PseudoAuthenticator#USER_NAME} parameter and
@@ -111,11 +111,11 @@ public class PseudoAuthenticationHandler implements AuthenticationHandler {
         AuthenticationToken token;
         String userName = request.getParameter(PseudoAuthenticator.USER_NAME);
         if (userName == null) {
-            if (getAcceptAnnonymous()) {
-                token = AuthenticationToken.ANNONYMOUS;
+            if (getAcceptAnonymous()) {
+                token = AuthenticationToken.ANONYMOUS;
             }
             else {
-                throw new AuthenticationException("Annonymous requests are disallowed");
+                throw new AuthenticationException("Anonymous requests are disallowed");
             }
         }
         else {

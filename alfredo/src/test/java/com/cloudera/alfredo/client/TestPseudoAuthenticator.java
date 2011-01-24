@@ -29,10 +29,10 @@ import java.util.Properties;
  */
 public class TestPseudoAuthenticator extends AuthenticatorTestCase {
 
-    private Properties getAuthenticationHandlerConfiguration(boolean annonymousAllowed) {
+    private Properties getAuthenticationHandlerConfiguration(boolean anonymousAllowed) {
         Properties props = new Properties();
         props.setProperty(AuthenticationFilter.AUTH_TYPE, "simple");
-        props.setProperty(PseudoAuthenticationHandler.ANNONYMOUS_ALLOWED, Boolean.toString(annonymousAllowed));
+        props.setProperty(PseudoAuthenticationHandler.ANONYMOUS_ALLOWED, Boolean.toString(anonymousAllowed));
         return props;
     }
 
@@ -41,7 +41,7 @@ public class TestPseudoAuthenticator extends AuthenticatorTestCase {
         assertEquals(System.getProperty("user.name"), authenticator.getUserName());
     }
     
-    public void testAnnonymousAllowed() throws Exception {
+    public void testAnonymousAllowed() throws Exception {
         setAuthenticationHandlerConfig(getAuthenticationHandlerConfiguration(true));
         start();
         try {
@@ -55,7 +55,7 @@ public class TestPseudoAuthenticator extends AuthenticatorTestCase {
         }
     }
 
-    public void testAnnonymousDisallowed() throws Exception {
+    public void testAnonymousDisallowed() throws Exception {
         setAuthenticationHandlerConfig(getAuthenticationHandlerConfiguration(false));
         start();
         try {
@@ -69,22 +69,22 @@ public class TestPseudoAuthenticator extends AuthenticatorTestCase {
         }
     }
 
-    public void testAuthenticationAnnonymousAllowed() throws Exception {
+    public void testAuthenticationAnonymousAllowed() throws Exception {
         setAuthenticationHandlerConfig(getAuthenticationHandlerConfiguration(true));
         _testAuthentication(new PseudoAuthenticator(), false);
     }
 
-    public void testAuthenticationAnnonymousDisallowed() throws Exception {
+    public void testAuthenticationAnonymousDisallowed() throws Exception {
         setAuthenticationHandlerConfig(getAuthenticationHandlerConfiguration(false));
         _testAuthentication(new PseudoAuthenticator(), false);
     }
     
-    public void testAuthenticationAnnonymousAllowedWithPost() throws Exception {
+    public void testAuthenticationAnonymousAllowedWithPost() throws Exception {
         setAuthenticationHandlerConfig(getAuthenticationHandlerConfiguration(true));
         _testAuthentication(new PseudoAuthenticator(), true);
     }
 
-    public void testAuthenticationAnnonymousDisallowedWithPost() throws Exception {
+    public void testAuthenticationAnonymousDisallowedWithPost() throws Exception {
         setAuthenticationHandlerConfig(getAuthenticationHandlerConfiguration(false));
         _testAuthentication(new PseudoAuthenticator(), true);
     }

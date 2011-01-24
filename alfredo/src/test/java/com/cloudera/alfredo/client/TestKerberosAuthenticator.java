@@ -43,7 +43,7 @@ public class TestKerberosAuthenticator extends AuthenticatorTestCase {
     public void testFallbacktoPseudoAuthenticator() throws Exception {
         Properties props = new Properties();
         props.setProperty(AuthenticationFilter.AUTH_TYPE, "simple");
-        props.setProperty(PseudoAuthenticationHandler.ANNONYMOUS_ALLOWED, "false");
+        props.setProperty(PseudoAuthenticationHandler.ANONYMOUS_ALLOWED, "false");
         setAuthenticationHandlerConfig(props);
         _testAuthentication(new KerberosAuthenticator(), false);
     }

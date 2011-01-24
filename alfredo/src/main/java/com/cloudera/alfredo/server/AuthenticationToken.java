@@ -37,9 +37,9 @@ import java.util.StringTokenizer;
 public class AuthenticationToken implements Principal {
 
     /**
-     * Constant that identifies an annonymous request.
+     * Constant that identifies an anonymous request.
      */
-    public static final AuthenticationToken ANNONYMOUS = new AuthenticationToken();
+    public static final AuthenticationToken ANONYMOUS = new AuthenticationToken();
 
     private static final String ATTR_SEPARATOR = ",";
     private static final String USER_NAME = "u";
@@ -61,7 +61,7 @@ public class AuthenticationToken implements Principal {
         principal = null;
         type = null;
         expires = -1;
-        token = "ANNONYMOUS";
+        token = "ANONYMOUS";
         generateToken();
     }
 
@@ -98,7 +98,7 @@ public class AuthenticationToken implements Principal {
      * @param expires expiration time of the token in milliseconds since Epoc.
      */
     public void setExpires(long expires) {
-        if (this != AuthenticationToken.ANNONYMOUS) {
+        if (this != AuthenticationToken.ANONYMOUS) {
             this.expires = expires;
             generateToken();
         }

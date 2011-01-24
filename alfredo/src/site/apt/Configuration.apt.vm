@@ -114,7 +114,7 @@ Alfredo, Java HTTP SPNEGO ${project.version} - Server Side Configuration
 
   * <<<[PREFIX.]type>>>: the keyword <<<simple>>>.
 
-  * <<<[PREFIX.]simple.annonymous.allowed>>>: is a boolean parameter that indicates if annonymous requests are allowed
+  * <<<[PREFIX.]simple.anonymous.allowed>>>: is a boolean parameter that indicates if anonymous requests are allowed
     or not. The default value is <<<false>>>.
 
   *<<Example>>:
@@ -131,7 +131,7 @@ Alfredo, Java HTTP SPNEGO ${project.version} - Server Side Configuration
             <param-value>simple</param-value>
         </init-param>
         <init-param>
-            <param-name>simple.annonymous.allowed</param-name>
+            <param-name>simple.anonymous.allowed</param-name>
             <param-value>false</param-value>
         </init-param>
         <init-param>

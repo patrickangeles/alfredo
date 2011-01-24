@@ -101,7 +101,7 @@ conn = new AuthenticatedURL(url, token).openConnection();
 $ kinit
 Please enter the password for tucu@LOCALHOST:
 
-$ curl http://localhost:8080/alfredo-examples/annonymous/who
+$ curl http://localhost:8080/alfredo-examples/anonymous/who
 
 $ curl http://localhost:8080/alfredo-examples/simple/who?user.name=foo
 

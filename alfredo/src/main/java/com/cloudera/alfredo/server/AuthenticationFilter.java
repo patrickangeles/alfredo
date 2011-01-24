@@ -300,7 +300,7 @@ public class AuthenticationFilter implements Filter {
             if (token == null) {
                 LOG.debug("Request [{}] triggering authentication", getRequestURL(httpRequest));
                 token = authHandler.authenticate(httpRequest, httpResponse);
-                if (token != null && token != AuthenticationToken.ANNONYMOUS) {
+                if (token != null && token != AuthenticationToken.ANONYMOUS) {
                     token.setExpires(System.currentTimeMillis() + validity);
                 }
                 newToken = true;
@@ -322,10 +322,10 @@ public class AuthenticationFilter implements Filter {
 
                     @Override
                     public Principal getUserPrincipal() {
-                        return (authToken != AuthenticationToken.ANNONYMOUS) ? authToken : null;
+                        return (authToken != AuthenticationToken.ANONYMOUS) ? authToken : null;
                     }
                 };
-                if (newToken && token != AuthenticationToken.ANNONYMOUS) {
+                if (newToken && token != AuthenticationToken.ANONYMOUS) {
                     String signedToken = signer.sign(token.toString());
                     httpResponse.addCookie(new Cookie(AuthenticatedURL.AUTH_COOKIE, signedToken));
                 }

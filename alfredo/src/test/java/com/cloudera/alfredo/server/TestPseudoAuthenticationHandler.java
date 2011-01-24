@@ -35,20 +35,20 @@ public class TestPseudoAuthenticationHandler extends TestCase {
         PseudoAuthenticationHandler handler = new PseudoAuthenticationHandler();
         try {
             Properties props = new Properties();
-            props.setProperty(PseudoAuthenticationHandler.ANNONYMOUS_ALLOWED, "false");
+            props.setProperty(PseudoAuthenticationHandler.ANONYMOUS_ALLOWED, "false");
             handler.init(props);
-            assertEquals(false, handler.getAcceptAnnonymous());
+            assertEquals(false, handler.getAcceptAnonymous());
         }
         finally {
             handler.destroy();
         }
     }
 
-    public void testAnnonymousOn() throws Exception {
+    public void testAnonymousOn() throws Exception {
         PseudoAuthenticationHandler handler = new PseudoAuthenticationHandler();
         try {
             Properties props = new Properties();
-            props.setProperty(PseudoAuthenticationHandler.ANNONYMOUS_ALLOWED, "true");
+            props.setProperty(PseudoAuthenticationHandler.ANONYMOUS_ALLOWED, "true");
             handler.init(props);
 
             HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
@@ -56,18 +56,18 @@ public class TestPseudoAuthenticationHandler extends TestCase {
 
             AuthenticationToken token = handler.authenticate(request, response);
 
-            assertEquals(AuthenticationToken.ANNONYMOUS, token);
+            assertEquals(AuthenticationToken.ANONYMOUS, token);
         }
         finally {
             handler.destroy();
         }
     }
 
-    public void testAnnonymousOff() throws Exception {
+    public void testAnonymousOff() throws Exception {
         PseudoAuthenticationHandler handler = new PseudoAuthenticationHandler();
         try {
             Properties props = new Properties();
-            props.setProperty(PseudoAuthenticationHandler.ANNONYMOUS_ALLOWED, "false");
+            props.setProperty(PseudoAuthenticationHandler.ANONYMOUS_ALLOWED, "false");
             handler.init(props);
 
             HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
@@ -86,11 +86,11 @@ public class TestPseudoAuthenticationHandler extends TestCase {
         }
     }
 
-    private void _testUserName(boolean annonymous) throws Exception {
+    private void _testUserName(boolean anonymous) throws Exception {
         PseudoAuthenticationHandler handler = new PseudoAuthenticationHandler();
         try {
             Properties props = new Properties();
-            props.setProperty(PseudoAuthenticationHandler.ANNONYMOUS_ALLOWED, Boolean.toString(annonymous));
+            props.setProperty(PseudoAuthenticationHandler.ANONYMOUS_ALLOWED, Boolean.toString(anonymous));
             handler.init(props);
 
             HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
@@ -109,11 +109,11 @@ public class TestPseudoAuthenticationHandler extends TestCase {
         }
     }
 
-    public void testUserNameAnnonymousOff() throws Exception {
+    public void testUserNameAnonymousOff() throws Exception {
         _testUserName(false);
     }
 
-    public void testUserNameAnnonymousOn() throws Exception {
+    public void testUserNameAnonymousOn() throws Exception {
         _testUserName(true);
     }
     
