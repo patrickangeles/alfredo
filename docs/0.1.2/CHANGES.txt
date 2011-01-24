@@ -1,0 +1,22 @@
+-- Alfredo 0.1.2 release
+
+- Using read-write GitHub URL
+- Excluding examples module from deployment to the Maven repository
+- Setting up to use maven release plugin for releases and documenting release steps
+- Adding CHANGES.txt to release documentation
+- Fixing 'annonymous' typo to 'anonymous', in code and comments
+
+-- Alfredo 0.1.1 release
+
+- Fixing/Updating javadocs
+- Add version number var to doc pages
+- Reorganizing docs layout for multiple releases
+- Normalizing configuration property names
+- Add equals/hashcode methods to AuthenticatedURL.Token
+- GSSManager instance is obtained at init time instead on every authentication request
+- Add AuthenticatedURL.Token constructor that takes a string representation of a token
+- Improved documentation
+
+-- Alfredo 0.1.0 release
+
+- First release
