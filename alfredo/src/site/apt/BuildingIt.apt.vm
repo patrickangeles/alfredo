@@ -58,7 +58,9 @@ Alfredo, Java HTTP SPNEGO ${project.version} - Building It
 ** Checklist
 
     * README file must be updated to list the version being released as an available version
+
     * Update the <<<alfredo/src/site/docs.html>>> page to include a link to the docs of the version being released
+
     * Push the local commits to the GitHub repository
 
 ** Update the Version, Tag the Repository, Deploy the POM/JARs to the Maven Repository
