@@ -127,6 +127,8 @@ public class TestAuthenticationFilter extends TestCase {
             filter.init(config);
             assertEquals(PseudoAuthenticationHandler.class, filter.getAuthenticationHandler().getClass());
             assertTrue(filter.isRandomSecret());
+            assertNull(filter.getCookieDomain());
+            assertNull(filter.getCookiePath());
             assertEquals(1000, filter.getValidity());
         }
         finally {
@@ -148,6 +150,26 @@ public class TestAuthenticationFilter extends TestCase {
         finally {
             filter.destroy();
         }
+
+        // custom cookie domain and cookie path
+        filter = new AuthenticationFilter();
+        try {
+            FilterConfig config = Mockito.mock(FilterConfig.class);
+            Mockito.when(config.getInitParameter(AuthenticationFilter.AUTH_TYPE)).thenReturn("simple");
+            Mockito.when(config.getInitParameter(AuthenticationFilter.COOKIE_DOMAIN)).thenReturn(".foo.com");
+            Mockito.when(config.getInitParameter(AuthenticationFilter.COOKIE_PATH)).thenReturn("/bar");
+            Mockito.when(config.getInitParameterNames()).thenReturn(
+                    new Vector(Arrays.asList(AuthenticationFilter.AUTH_TYPE,
+                                             AuthenticationFilter.COOKIE_DOMAIN,
+                                             AuthenticationFilter.COOKIE_PATH)).elements());
+            filter.init(config);
+            assertEquals(".foo.com", filter.getCookieDomain());
+            assertEquals("/bar", filter.getCookiePath());
+        }
+        finally {
+            filter.destroy();
+        }
+
 
         // authentication handler lifecycle, and custom impl
         DummyAuthenticationHandler.reset();
@@ -270,7 +292,7 @@ public class TestAuthenticationFilter extends TestCase {
         }
     }
 
-    public void testDoFilterAuthentication() throws Exception {
+    private void _testDoFilterAuthentication(boolean withDomainPath) throws Exception {
         AuthenticationFilter filter = new AuthenticationFilter();
         try {
             FilterConfig config = Mockito.mock(FilterConfig.class);
@@ -282,6 +304,18 @@ public class TestAuthenticationFilter extends TestCase {
                     new Vector(Arrays.asList(AuthenticationFilter.AUTH_TYPE,
                                              AuthenticationFilter.AUTH_TOKEN_VALIDITY,
                                              AuthenticationFilter.SIGNATURE_SECRET)).elements());
+
+            if (withDomainPath) {
+                Mockito.when(config.getInitParameter(AuthenticationFilter.COOKIE_DOMAIN)).thenReturn(".foo.com");
+                Mockito.when(config.getInitParameter(AuthenticationFilter.COOKIE_PATH)).thenReturn("/bar");
+                Mockito.when(config.getInitParameterNames()).thenReturn(
+                        new Vector(Arrays.asList(AuthenticationFilter.AUTH_TYPE,
+                                                 AuthenticationFilter.AUTH_TOKEN_VALIDITY,
+                                                 AuthenticationFilter.SIGNATURE_SECRET,
+                                                 AuthenticationFilter.COOKIE_DOMAIN,
+                                                 AuthenticationFilter.COOKIE_PATH)).elements());
+            }
+
             filter.init(config);
 
             HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
@@ -332,10 +366,27 @@ public class TestAuthenticationFilter extends TestCase {
             String value = signer.verifyAndExtract(setCookie[0].getValue());
             AuthenticationToken token = AuthenticationToken.parse(value);
             assertEquals(System.currentTimeMillis() + 1000 * 1000, token.getExpires(), 100);
+
+            if (withDomainPath) {
+                assertEquals(".foo.com", setCookie[0].getDomain());
+                assertEquals("/bar", setCookie[0].getPath());
+            }
+            else {
+                assertNull(setCookie[0].getDomain());
+                assertNull(setCookie[0].getPath());
+            }
         }
         finally {
             filter.destroy();
         }
+    }
+
+    public void testDoFilterAuthentication() throws Exception {
+        _testDoFilterAuthentication(false);
+    }
+
+    public void testDoFilterAuthenticationWithDomainPath() throws Exception {
+        _testDoFilterAuthentication(true);
     }
 
     public void testDoFilterAuthenticated() throws Exception {

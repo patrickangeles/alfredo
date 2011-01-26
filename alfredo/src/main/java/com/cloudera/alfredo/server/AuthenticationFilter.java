@@ -63,7 +63,9 @@ import java.util.Random;
  *   <li>[#PREFIX#.]signature.secret: the secret used to sign the HTTP Cookie value, the default value is a random
  *   value (unless multiple webapp instances need to share the secret the random value is adequate.</li>
  *   <li>[#PREFIX#.]token.validity: validity -in seconds- of the generated token is valid before a
- *       new authentication is triggered, default value is <code>3600</code> seconds</li>
+ *       new authentication is triggered, default value is <code>3600</code> seconds.</li>
+ *   <li>[#PREFIX#.]cookie.domain: domain to use for the HTTP cookie that stores the authentication token.</li>
+ *   <li>[#PREFIX#.]cookie.path: path to use for the HTTP cookie that stores the authentication token.</li>
  * </ul>
  * <p/>
  * The rest of the configuration properties are specific to the {@link AuthenticationHandler} implementation and the
@@ -95,10 +97,22 @@ public class AuthenticationFilter implements Filter {
      */
     public static final String AUTH_TOKEN_VALIDITY = "token.validity";
 
+    /**
+     * Constant for the configuration property that indicates the domain to use in the HTTP cookie.
+     */
+    public static final String COOKIE_DOMAIN = "cookie.domain";
+
+    /**
+     * Constant for the configuration property that indicates the path to use in the HTTP cookie.
+     */
+    public static final String COOKIE_PATH = "cookie.path";
+
     private Signer signer;
     private AuthenticationHandler authHandler;
     private boolean randomSecret;
     private long validity;
+    private String cookieDomain;
+    private String cookiePath;
 
     /**
      * Initializes the authentication filter.
@@ -151,6 +165,9 @@ public class AuthenticationFilter implements Filter {
         }
         signer = new Signer(signatureSecret.getBytes());
         validity = Long.parseLong(config.getProperty(AUTH_TOKEN_VALIDITY, "3600")) * 1000; //10 hours
+
+        cookieDomain = config.getProperty(COOKIE_DOMAIN, null);
+        cookiePath = config.getProperty(COOKIE_PATH, null);
     }
 
     /**
@@ -178,6 +195,24 @@ public class AuthenticationFilter implements Filter {
      */
     protected long getValidity() {
         return validity / 1000;
+    }
+
+    /**
+     * Returns the cookie domain to use for the HTTP cookie.
+     *
+     * @return the cookie domain to use for the HTTP cookie.
+     */
+    protected String getCookieDomain() {
+        return cookieDomain;
+    }
+
+    /**
+     * Returns the cookie path to use for the HTTP cookie.
+     *
+     * @return the cookie path to use for the HTTP cookie.
+     */
+    protected String getCookiePath() {
+        return  cookiePath;
     }
 
     /**
@@ -327,14 +362,15 @@ public class AuthenticationFilter implements Filter {
                 };
                 if (newToken && token != AuthenticationToken.ANONYMOUS) {
                     String signedToken = signer.sign(token.toString());
-                    httpResponse.addCookie(new Cookie(AuthenticatedURL.AUTH_COOKIE, signedToken));
+                    Cookie cookie = createCookie(signedToken);
+                    httpResponse.addCookie(cookie);
                 }
                 filterChain.doFilter(httpRequest, httpResponse);
             }
         }
         catch (AuthenticationException ex) {
             if (!httpResponse.isCommitted()) {
-                Cookie cookie = new Cookie(AuthenticatedURL.AUTH_COOKIE, "");
+                Cookie cookie = createCookie("");
                 cookie.setMaxAge(0);
                 httpResponse.addCookie(cookie);
                 httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, ex.getMessage());
@@ -343,4 +379,23 @@ public class AuthenticationFilter implements Filter {
         }
     }
 
+    /**
+     * Creates the Alfredo authentiation HTTP cookie.
+     * <p>
+     * It sets the domain and path specified in the configuration.
+     * 
+     * @param token authentication token for the cookie.
+     * @return the HTTP cookie.
+     */
+    protected Cookie createCookie(String token) {
+        Cookie cookie = new Cookie(AuthenticatedURL.AUTH_COOKIE, token);
+        cookie.setVersion(1);
+        if (getCookieDomain() != null) {
+            cookie.setDomain(getCookieDomain());
+        }
+        if (getCookiePath() != null) {
+            cookie.setPath(getCookiePath());
+        }
+        return cookie;
+    }
 }

@@ -56,6 +56,10 @@ Alfredo, Java HTTP SPNEGO ${project.version} - Server Side Configuration
   * <<<[PREFIX.]token.validity>>>: The validity -in seconds- of the generated authentication token. The
     default value is <<<3600>>> seconds.
 
+  * <<<[PREFIX.]cookie.domain>>>: domain to use for the HTTP cookie that stores the authentication token.
+
+  * <<<[PREFIX.]cookie.path>>>: path to use for the HTTP cookie that stores the authentication token.
+
 ** Kerberos Configuration
 
   <<IMPORTANT>>: A KDC must be configured and running.
@@ -85,16 +89,24 @@ Alfredo, Java HTTP SPNEGO ${project.version} - Server Side Configuration
             <param-value>kerberos</param-value>
         </init-param>
         <init-param>
+            <param-name>token.validity</param-name>
+            <param-value>30</param-value>
+        </init-param>
+        <init-param>
+            <param-name>cookie.domain</param-name>
+            <param-value>.foo.com</param-value>
+        </init-param>
+        <init-param>
+            <param-name>cookie.path</param-name>
+            <param-value>/</param-value>
+        </init-param>
+        <init-param>
             <param-name>kerberos.principal</param-name>
             <param-value>HTTP/localhost@LOCALHOST</param-value>
         </init-param>
         <init-param>
             <param-name>kerberos.keytab</param-name>
             <param-value>/tmp/alfredo.keytab</param-value>
-        </init-param>
-        <init-param>
-            <param-name>token.validity</param-name>
-            <param-value>30</param-value>
         </init-param>
     </filter>
 
@@ -131,12 +143,20 @@ Alfredo, Java HTTP SPNEGO ${project.version} - Server Side Configuration
             <param-value>simple</param-value>
         </init-param>
         <init-param>
-            <param-name>simple.anonymous.allowed</param-name>
-            <param-value>false</param-value>
-        </init-param>
-        <init-param>
             <param-name>token.validity</param-name>
             <param-value>30</param-value>
+        </init-param>
+        <init-param>
+            <param-name>cookie.domain</param-name>
+            <param-value>.foo.com</param-value>
+        </init-param>
+        <init-param>
+            <param-name>cookie.path</param-name>
+            <param-value>/</param-value>
+        </init-param>
+        <init-param>
+            <param-name>simple.anonymous.allowed</param-name>
+            <param-value>false</param-value>
         </init-param>
     </filter>
 
