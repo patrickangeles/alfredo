@@ -336,7 +336,7 @@ public class AuthenticationFilter implements Filter {
                 LOG.debug("Request [{}] triggering authentication", getRequestURL(httpRequest));
                 token = authHandler.authenticate(httpRequest, httpResponse);
                 if (token != null && token != AuthenticationToken.ANONYMOUS) {
-                    token.setExpires(System.currentTimeMillis() + validity);
+                    token.setExpires(System.currentTimeMillis() + getValidity() * 1000);
                 }
                 newToken = true;
             }

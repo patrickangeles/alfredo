@@ -1,5 +1,6 @@
 -- Alfredo 0.1.3 release
 
+- AuthenticationFilter using getValidity() method now for setting the expiration of the token
 - Adding support for configuration values for domain and path in the authentication HTTP cookie
 - Adding to release documentation with checklist of things to take care, updating missed change in README.txt
 
