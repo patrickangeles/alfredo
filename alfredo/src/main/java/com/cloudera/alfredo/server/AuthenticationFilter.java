@@ -389,7 +389,6 @@ public class AuthenticationFilter implements Filter {
      */
     protected Cookie createCookie(String token) {
         Cookie cookie = new Cookie(AuthenticatedURL.AUTH_COOKIE, token);
-        cookie.setVersion(1);
         if (getCookieDomain() != null) {
             cookie.setDomain(getCookieDomain());
         }
