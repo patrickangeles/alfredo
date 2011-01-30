@@ -1,5 +1,6 @@
 -- Alfredo 0.1.4 release
 
+- Changing token attribute separator from ',' to '&'
 - Changing not to set Cookie version
 
 -- Alfredo 0.1.3 release

@@ -26,7 +26,7 @@ import java.security.NoSuchAlgorithmException;
  * Signs strings and verifies signed strings using a SHA digest.
  */
 public class Signer {
-    private static final String SIGNATURE = ",s=";
+    private static final String SIGNATURE = "&s=";
 
     private byte[] secret;
 

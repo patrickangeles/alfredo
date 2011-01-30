@@ -41,7 +41,7 @@ public class AuthenticationToken implements Principal {
      */
     public static final AuthenticationToken ANONYMOUS = new AuthenticationToken();
 
-    private static final String ATTR_SEPARATOR = ",";
+    private static final String ATTR_SEPARATOR = "&";
     private static final String USER_NAME = "u";
     private static final String PRINCIPAL = "p";
     private static final String EXPIRES = "e";
