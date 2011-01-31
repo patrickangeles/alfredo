@@ -44,6 +44,11 @@ public class TestPseudoAuthenticationHandler extends TestCase {
         }
     }
 
+    public void testType() throws Exception {
+        PseudoAuthenticationHandler handler = new PseudoAuthenticationHandler();
+        assertEquals(PseudoAuthenticationHandler.TYPE, handler.getType());
+    }
+
     public void testAnonymousOn() throws Exception {
         PseudoAuthenticationHandler handler = new PseudoAuthenticationHandler();
         try {

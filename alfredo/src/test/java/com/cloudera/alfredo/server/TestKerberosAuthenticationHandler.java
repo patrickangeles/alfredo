@@ -70,6 +70,11 @@ public class TestKerberosAuthenticationHandler extends TestCase {
         assertEquals(KerberosTestUtils.getKeytabFile(), handler.getKeytab());
     }
 
+    public void testType() throws Exception {
+        KerberosAuthenticationHandler handler = new KerberosAuthenticationHandler();
+        assertEquals(KerberosAuthenticationHandler.TYPE, handler.getType());
+    }
+
     public void testRequestWithoutAuthorization() throws Exception {
         HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
         HttpServletResponse response = Mockito.mock(HttpServletResponse.class);

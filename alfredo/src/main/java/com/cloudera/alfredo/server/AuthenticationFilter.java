@@ -307,6 +307,9 @@ public class AuthenticationFilter implements Filter {
         }
         if (tokenStr != null) {
             token = AuthenticationToken.parse(tokenStr);
+            if (!token.getType().equals(authHandler.getType())) {
+                throw new AuthenticationException("Invalid AuthenticationToken type");
+            }
             if (token.isExpired()) {
                 throw new AuthenticationException("AuthenticationToken expired");
             }

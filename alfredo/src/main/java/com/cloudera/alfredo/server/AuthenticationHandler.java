@@ -35,6 +35,16 @@ import java.util.Properties;
 public interface AuthenticationHandler {
 
     /**
+     * Returns the authentication type of the authentication handler.
+     * <p/>
+     * This should be a name that uniquely identifies the authentication type.
+     * For example 'simple' or 'kerberos'.
+     *
+     * @return the authentication type of the authentication handler.
+     */
+    public String getType();
+
+    /**
      * Initializes the authentication handler instance.
      * <p/>
      * This method is invoked by the {@link AuthenticationFilter#init} method.

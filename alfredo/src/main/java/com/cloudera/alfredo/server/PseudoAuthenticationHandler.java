@@ -87,6 +87,17 @@ public class PseudoAuthenticationHandler implements AuthenticationHandler {
     }
 
     /**
+     * Returns the authentication type of the authentication handler, 'simple'.
+     * <p/>
+     *
+     * @return the authentication type of the authentication handler, 'simple'.
+     */
+    @Override
+    public String getType() {
+        return TYPE;
+    }
+
+    /**
      * Authenticates an HTTP client request.
      * <p/>
      * It extract the {@link PseudoAuthenticator#USER_NAME} parameter from the query string and creates

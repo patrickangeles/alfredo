@@ -195,6 +195,17 @@ public class KerberosAuthenticationHandler implements AuthenticationHandler {
     }
 
     /**
+     * Returns the authentication type of the authentication handler, 'kerberos'.
+     * <p/>
+     *
+     * @return the authentication type of the authentication handler, 'kerberos'.
+     */
+    @Override
+    public String getType() {
+        return TYPE;
+    }
+
+    /**
      * Returns the Kerberos principal used by the authentication handler.
      *
      * @return the Kerberos principal used by the authentication handler.

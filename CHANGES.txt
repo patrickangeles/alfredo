@@ -1,5 +1,6 @@
 -- Alfredo 0.1.4 release
 
+- Adding getType() to AuthenticationHandler and verifying token type in filter
 - Changing token attribute separator from ',' to '&'
 - Changing not to set Cookie version
 
