@@ -1,3 +1,7 @@
+-- Alfredo 0.1.5 release
+
+- Make AuthenticatedURL.injectToken method public
+
 -- Alfredo 0.1.4 release
 
 - Adding getType() to AuthenticationHandler and verifying token type in filter

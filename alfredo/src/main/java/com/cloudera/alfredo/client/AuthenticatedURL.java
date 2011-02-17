@@ -231,7 +231,7 @@ public class AuthenticatedURL {
      * @param conn connection to inject the authentication token.
      * @param token authentication token to inject.
      */
-    static void injectToken(HttpURLConnection conn, Token token) {
+    public static void injectToken(HttpURLConnection conn, Token token) {
         String t = token.token;
         if (t != null) {
             if (!t.startsWith("\"")) {
