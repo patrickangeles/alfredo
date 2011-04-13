@@ -149,9 +149,20 @@ public class KerberosAuthenticator implements Authenticator {
                 doSpnegoSequence(token);
             }
             else {
-                new PseudoAuthenticator().authenticate(url, token);
+                getFallBackAuthenticator().authenticate(url, token);
             }
         }
+    }
+
+    /**
+     * If the specified URL does not support SPNEGO authentication, a fallback {@link Authenticator} wil be used.
+     * <p/>
+     * This implementation returns a {@link PseudoAuthenticator}.
+     *
+     * @return the fallback {@link Authenticator}.
+     */
+    protected Authenticator getFallBackAuthenticator() {
+        return new PseudoAuthenticator();
     }
 
     /*
