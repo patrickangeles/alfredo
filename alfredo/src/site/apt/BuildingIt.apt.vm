@@ -70,8 +70,11 @@ Alfredo, Java HTTP SPNEGO ${project.version} - Building It
     The following instructions will:
 
     * Update the versions in POMs to the release version
+
     * Tag the commit with the release version
+
     * Update the versions in the POMs to the next development version
+
     * Deploy the POM/JARs to the Maven Repository
 
     For the tag name use exactly the release number (i.e. <<<0.1.2>>>).
