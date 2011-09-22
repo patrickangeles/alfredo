@@ -17,12 +17,11 @@
  */
 package com.cloudera.alfredo.server;
 
-import com.cloudera.alfredo.client.AuthenticatedURL;
-import com.cloudera.alfredo.client.AuthenticationException;
-import com.cloudera.alfredo.util.Signer;
-import com.cloudera.alfredo.util.SignerException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.io.IOException;
+import java.security.Principal;
+import java.util.Enumeration;
+import java.util.Properties;
+import java.util.Random;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -34,11 +33,14 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.security.Principal;
-import java.util.Enumeration;
-import java.util.Properties;
-import java.util.Random;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.cloudera.alfredo.client.AuthenticatedURL;
+import com.cloudera.alfredo.client.AuthenticationException;
+import com.cloudera.alfredo.util.Signer;
+import com.cloudera.alfredo.util.SignerException;
 
 /**
  * The <code>AuthenticationFilter</code> enabled protecting web application resources with different (pluggable)
@@ -57,8 +59,9 @@ import java.util.Random;
  * <ul>
  *   <li>config.prefix: indicates the prefix to be used by all other configuration properties, the default value
  *   is no prefix. See below for details on how/why this prefix is used.</li>
- *   <li>[#PREFIX#.]type: simple|kerberos|#CLASS#, 'simple' is short for the
- *   {@link PseudoAuthenticationHandler}, 'kerberos' is short for {@link KerberosAuthenticationHandler}, otherwise
+ *   <li>[#PREFIX#.]type: simple|managed|kerberos|#CLASS#, 'simple' is short for the
+ *   {@link PseudoAuthenticationHandler}, 'managed' is short for {@link ContainerManagedAuthenticationHandler},
+ *   'kerberos' is short for {@link KerberosAuthenticationHandler}, otherwise
  *   the full class name of the {@link AuthenticationHandler} must be specified.</li>
  *   <li>[#PREFIX#.]signature.secret: the secret used to sign the HTTP Cookie value, the default value is a random
  *   value (unless multiple webapp instances need to share the secret the random value is adequate.</li>
@@ -131,10 +134,13 @@ public class AuthenticationFilter implements Filter {
         String authHandlerName = config.getProperty(AUTH_TYPE, null);
         String authHandlerClassName;
         if (authHandlerName == null) {
-            throw new ServletException("Authentication type must be specified: simple|kerberos|<class>");
+            throw new ServletException("Authentication type must be specified: simple|managed|kerberos|<class>");
         }
         if (authHandlerName.equals("simple")) {
             authHandlerClassName = PseudoAuthenticationHandler.class.getName();
+        }
+        else if (authHandlerName.equals("managed")) {
+            authHandlerClassName = ContainerManagedAuthenticationHandler.class.getName();
         }
         else if (authHandlerName.equals("kerberos")) {
             authHandlerClassName = KerberosAuthenticationHandler.class.getName();
@@ -281,7 +287,7 @@ public class AuthenticationFilter implements Filter {
      * <p/>
      * If this method returns <code>null</code> the filter will invoke the configured {@link AuthenticationHandler}
      * to perform user authentication.
-     * 
+     *
      * @param request request object.
      * @return the Authentication token if the request is authentiated, <code>null</code> otherwise.
      * @throws IOException thrown if an IO error occurred.
@@ -386,7 +392,7 @@ public class AuthenticationFilter implements Filter {
      * Creates the Alfredo authentiation HTTP cookie.
      * <p>
      * It sets the domain and path specified in the configuration.
-     * 
+     *
      * @param token authentication token for the cookie.
      * @return the HTTP cookie.
      */
